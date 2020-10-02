@@ -16,24 +16,22 @@
 #include QMK_KEYBOARD_H
 
 #ifdef RGB_MATRIX_ENABLE
-#ifdef SLEEPMODE_ENABLE
-    /* A bunch of vars to keep track of the rgb states
-       before sleepmode is turned on */
-    static bool sleepmode_on = false;
-    static uint8_t sleepmode_before_mode = -1;
-    static uint8_t sleepmode_before_brightness = -1;
-    static uint8_t sleepmode_before_anim_speed = -1;
-    static uint8_t halfmin_counter = 0;
-    static uint16_t idle_timer = 0;
-#endif
-#ifdef LAYER_LIGHTING_ENABLE
-    #define MAP_TRANS 0xF000000
-    #define MAP_OFF   0x0
-    enum layer_lighting_type{
-        NORMAL,
-        MAP
-    };
-#endif
+    #ifdef SLEEPMODE_ENABLE
+        /* A bunch of vars to keep track of the rgb states
+           before sleepmode is turned on */
+        static bool sleepmode_on = false;
+        static uint8_t sleepmode_before_mode = -1;
+        static uint8_t sleepmode_before_brightness = -1;
+        static uint8_t sleepmode_before_anim_speed = -1;
+        static uint8_t halfmin_counter = 0;
+        static uint16_t idle_timer = 0;
+    #endif
+    #ifdef LAYER_LIGHTING_ENABLE
+        enum layer_lighting_type{
+            NORMAL,
+            MAP
+        };
+    #endif
 #endif
 
 /* ,-----------------------------------------------------------.
@@ -100,43 +98,45 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 
-#ifdef LAYER_LIGHTING_ENABLE
-const uint8_t layer_lighting_types[] = {
-    [0] = NORMAL,
-    [1] = MAP,
-    [2] = MAP,
-    [3] = MAP
-};
-const uint32_t layer_lighting_map[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = {
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,                         MAP_OFF,                                    MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF}
-    },
-    [1] = {
-        { 0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF0000},
-        {  MAP_OFF, MAP_TRANS,  0x00FF00, MAP_TRANS, MAP_TRANS,  0x00FF00,  0x00FF00, MAP_TRANS, MAP_TRANS,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,  0xFF00FE,   0xFF00FE},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,                         MAP_OFF,                                    MAP_OFF,   MAP_OFF,  0xFF00FE,  0xFF00FE,   0xFF00FE}
-    },
-    [2] = {
-        { 0xFF0000,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,                         MAP_OFF,                                    MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF}
-    },
-    [3] = {
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,  0xFF7700,  0xFF0000,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,  0x00FF00,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,                         MAP_OFF,                                    MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF}
-    }
-};
+#ifdef RGB_MATRIX_ENABLE
+    #ifdef LAYER_LIGHTING_ENABLE
+        const uint8_t layer_lighting_types[] = {
+            [0] = NORMAL,
+            [1] = MAP,
+            [2] = MAP,
+            [3] = MAP
+        };
+        const uint32_t layer_lighting_map[][MATRIX_ROWS][MATRIX_COLS] = {
+            [0] = {
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,                         MAP_DEF,                                    MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF}
+            },
+            [1] = {
+                { 0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF0000},
+                {  MAP_DEF, MAP_TRANS,  0x00FF00, MAP_TRANS, MAP_TRANS,  0x00FF00,  0x00FF00, MAP_TRANS, MAP_TRANS,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,  0xFF00FE,   0xFF00FE},
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,                         MAP_DEF,                                    MAP_DEF,   MAP_DEF,  0xFF00FE,   0xFF00FE,   0xFF00FE}
+            },
+            [2] = {
+                { 0xFF0000,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,                         MAP_DEF,                                    MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF}
+            },
+            [3] = {
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,  0xFF7700,  0xFF0000,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,  0x00FF00,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
+                {  MAP_DEF,   MAP_DEF,   MAP_DEF,                         MAP_DEF,                                    MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF}
+            }
+        };
+    #endif
 #endif
 
 void rgb_matrix_indicators_user(void) {
@@ -147,73 +147,70 @@ void rgb_matrix_indicators_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     #ifdef RGB_MATRIX_ENABLE
-    #ifdef SLEEPMODE_ENABLE
-        if (record->event.pressed) {
-            if (sleepmode_before_mode == -1) { sleepmode_before_mode = rgb_matrix_get_mode(); }
-            if (sleepmode_before_brightness == -1) { sleepmode_before_brightness = rgb_matrix_get_val(); }
-            if (sleepmode_before_anim_speed == -1) { sleepmode_before_anim_speed = rgb_matrix_get_speed(); }
+        #ifdef SLEEPMODE_ENABLE
+            if (record->event.pressed) {
+                if (sleepmode_before_mode == -1) { sleepmode_before_mode = rgb_matrix_get_mode(); }
+                if (sleepmode_before_brightness == -1) { sleepmode_before_brightness = rgb_matrix_get_val(); }
+                if (sleepmode_before_anim_speed == -1) { sleepmode_before_anim_speed = rgb_matrix_get_speed(); }
 
-            if (sleepmode_on == true) {
-                // rgb_matrix_enable_noeeprom();
-                rgb_matrix_mode_noeeprom(sleepmode_before_mode);
-                rgb_matrix_set_speed_noeeprom(sleepmode_before_anim_speed);
-                rgb_matrix_sethsv_noeeprom(rgb_matrix_get_hue(), rgb_matrix_get_sat(), sleepmode_before_brightness);
-                sleepmode_on = false;
+                if (sleepmode_on == true) {
+                    rgb_matrix_mode_noeeprom(sleepmode_before_mode);
+                    rgb_matrix_set_speed_noeeprom(sleepmode_before_anim_speed);
+                    rgb_matrix_sethsv_noeeprom(rgb_matrix_get_hue(), rgb_matrix_get_sat(), sleepmode_before_brightness);
+                    sleepmode_on = false;
+                }
+                idle_timer = timer_read();
+                halfmin_counter = 0;
             }
-            idle_timer = timer_read();
-            halfmin_counter = 0;
-        }
-    #endif
+        #endif
     #endif
     return true;
  }
 
  void matrix_scan_user(void) {
     #ifdef RGB_MATRIX_ENABLE
-    #ifdef SLEEPMODE_ENABLE
-        /* idle_timer needs to be set one time */
-        if (idle_timer == 0) idle_timer = timer_read();
+        #ifdef SLEEPMODE_ENABLE
+            if (idle_timer == 0) idle_timer = timer_read();
 
-        if ( !sleepmode_on && timer_elapsed(idle_timer) > 30000) {
-            halfmin_counter++;
-            idle_timer = timer_read();
-        }
-
-        if ( !sleepmode_on && halfmin_counter >= SLEEPMODE_TIMEOUT * 2) {// * 2) {
-            layer_clear();
-            sleepmode_before_anim_speed = rgb_matrix_get_speed();
-            sleepmode_before_brightness = rgb_matrix_get_val();
-            sleepmode_before_mode = rgb_matrix_get_mode();
-            //rgb_matrix_disable_noeeprom();
-
-            rgb_matrix_mode_noeeprom(SLEEPMODE_RGB_MODE);
-            rgb_matrix_set_speed_noeeprom(SLEEPMODE_RGB_ANIMATION_SPEED);
-            rgb_matrix_sethsv_noeeprom(rgb_matrix_get_hue(), rgb_matrix_get_sat(), SLEEPMODE_RGB_VAL);
-            sleepmode_on = true;
-            halfmin_counter = 0;
-        }
-    #endif
-
-    #ifdef LAYER_LIGHTING_ENABLE
-    uint8_t layer = biton32(layer_state);
-
-    if (layer_lighting_types[layer] == MAP) {
-        uint16_t led = 0;
-        uint32_t hexValue;
-        for (int y = 0; y < MATRIX_ROWS; y++) {
-            for (int x = 0; x < MATRIX_COLS; x++) {
-                hexValue = layer_lighting_map[layer][y][x];
-                if ((hexValue >> 24) > 0) { led++; continue; }
-                rgb_matrix_set_color(
-                    led,
-                    ((hexValue >> 16) & 0xFF),
-                    ((hexValue >>  8) & 0xFF),
-                    ((hexValue      ) & 0xFF)
-                );
-                led++;
+            if ( !sleepmode_on && timer_elapsed(idle_timer) > 30000) {
+                halfmin_counter++;
+                idle_timer = timer_read();
             }
-        }
-    }
-    #endif
+
+            if ( !sleepmode_on && halfmin_counter >= SLEEPMODE_TIMEOUT * 2) {// * 2) {
+                layer_clear();
+                sleepmode_before_anim_speed = rgb_matrix_get_speed();
+                sleepmode_before_brightness = rgb_matrix_get_val();
+                sleepmode_before_mode = rgb_matrix_get_mode();
+
+                rgb_matrix_mode_noeeprom(SLEEPMODE_RGB_MODE);
+                rgb_matrix_set_speed_noeeprom(SLEEPMODE_RGB_ANIMATION_SPEED);
+                rgb_matrix_sethsv_noeeprom(rgb_matrix_get_hue(), rgb_matrix_get_sat(), SLEEPMODE_RGB_VAL);
+                sleepmode_on = true;
+                halfmin_counter = 0;
+            }
+        #endif
+
+        #ifdef LAYER_LIGHTING_ENABLE
+            uint8_t layer = biton32(layer_state);
+
+            if (layer_lighting_types[layer] == MAP) {
+                uint16_t led = 0;
+                uint32_t hexValue;
+                for (int y = 0; y < MATRIX_ROWS; y++) {
+                    for (int x = 0; x < MATRIX_COLS; x++) {
+                        hexValue = layer_lighting_map[layer][y][x];
+                        if ((hexValue >> 24) > 0) { led++; continue; }
+                        rgb_matrix_set_color(
+                            led,
+                            ((hexValue >> 16) & 0xFF),
+                            ((hexValue >>  8) & 0xFF),
+                            ((hexValue      ) & 0xFF)
+                        );
+                        led++;
+                    }
+                }
+            }
+        #endif
     #endif
 }

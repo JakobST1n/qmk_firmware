@@ -18,23 +18,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /*******************************************
  * SLEEPMODE CONFIG
  *******************************************/
- #define SLEEPMODE_ENABLE
-/* How long the backlight should stay on
-   without any interaction before turning off. */
-#define SLEEPMODE_TIMEOUT 2  // in minutes
-/* Which mode we should enter after the timeout,
-   RGB_MATRIX_NONE to turn off.
-   I thinks RGB_MATRIX_DIGITAL RAIN is pretty. */
-#define SLEEPMODE_RGB_MODE RGB_MATRIX_DIGITAL_RAIN
-/* The desired animation speed when in "sleep mode" */
-#define SLEEPMODE_RGB_ANIMATION_SPEED 10
-/* The desired brightness when in "sleep mode" */
-#define SLEEPMODE_RGB_VAL 10
+#define SLEEPMODE_ENABLE
+#ifdef SLEEPMODE_ENABLE
+    /* How long the backlight should stay on
+       without any interaction before turning off. */
+    #define SLEEPMODE_TIMEOUT 2  // in minutes
+    /* Which mode we should enter after the timeout,
+       RGB_MATRIX_NONE to turn off.
+       I thinks RGB_MATRIX_DIGITAL RAIN is pretty. */
+    #define SLEEPMODE_RGB_MODE RGB_MATRIX_DIGITAL_RAIN
+    /* The desired animation speed when in "sleep mode" */
+    #define SLEEPMODE_RGB_ANIMATION_SPEED 10
+    /* The desired brightness when in "sleep mode" */
+    #define SLEEPMODE_RGB_VAL 10
+#endif
 
 /*******************************************
  * LAYER PER KEY LIGHTING
  *******************************************/
 #define LAYER_LIGHTING_ENABLE
+#ifdef LAYER_LIGHTING_ENABLE
+    /* This is for keys that should not be changed on a certain layer.
+       Which means, either the base rgb_matrix mode will affect that led,
+       or a lower layer could potentially affect it. */
+    #define MAP_TRANS 0xF000000
+    /* This is used for other keys, set to MAP_TRANS instead of 0x0 for having
+       the unchanged effect on those leds */
+    #define MAP_DEF   0x0
+#endif
 
 /*******************************************
  * RGB_MATRIX CONFIG
