@@ -119,21 +119,21 @@ const uint32_t layer_lighting_map[][MATRIX_ROWS][MATRIX_COLS] = {
         { 0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF0000},
         {  MAP_OFF, MAP_TRANS,  0x00FF00, MAP_TRANS, MAP_TRANS,  0x00FF00,  0x00FF00, MAP_TRANS, MAP_TRANS,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
         {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,  0xFF00FE,   0xFF00FE},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,  0xFF00FE,   0xFF00FE},
         {  MAP_OFF,   MAP_OFF,   MAP_OFF,                         MAP_OFF,                                    MAP_OFF,   MAP_OFF,  0xFF00FE,  0xFF00FE,   0xFF00FE}
     },
     [2] = {
         { 0xFF0000,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
         {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
         {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
         {  MAP_OFF,   MAP_OFF,   MAP_OFF,                         MAP_OFF,                                    MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF}
     },
     [3] = {
         {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
         {  MAP_OFF,   MAP_OFF,   MAP_OFF,  0xFF7700,  0xFF0000,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
         {  MAP_OFF,   MAP_OFF,   MAP_OFF,  0x00FF00,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
-        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
         {  MAP_OFF,   MAP_OFF,   MAP_OFF,                         MAP_OFF,                                    MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF}
     }
 };
