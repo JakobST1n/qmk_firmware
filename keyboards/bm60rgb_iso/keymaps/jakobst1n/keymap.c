@@ -15,26 +15,8 @@
  */
 #include QMK_KEYBOARD_H
 
-/* @TODO: Planning to move layer indication from rgb_matrix_indicators_user, to something else:
- * References:
- *  - https://daedalusrising.com/2019/10/07/the-massdrop-alt-custom-animations-and-more/
- *  - https://beta.docs.qmk.fm/using-qmk/guides/custom_quantum_functions#layer-change-code-id-layer-change-code
- */
-
 #ifdef RGB_MATRIX_ENABLE
 #ifdef SLEEPMODE_ENABLE
-    /* How long the backlight should stay on
-       without any interaction before turning off. */
-    #define SLEEPMODE_TIMEOUT 2  // in minutes
-    /* Which mode we should enter after the timeout,
-       RGB_MATRIX_NONE to turn off.
-       I thinks RGB_MATRIX_DIGITAL RAIN is pretty. */
-    #define SLEEPMODE_RGB_MODE RGB_MATRIX_DIGITAL_RAIN
-    /* The desired animation speed when in "sleep mode" */
-    #define SLEEPMODE_RGB_ANIMATION_SPEED 10
-    /* The desired brightness when in "sleep mode" */
-    #define SLEEPMODE_RGB_VAL 10
-
     /* A bunch of vars to keep track of the rgb states
        before sleepmode is turned on */
     static bool sleepmode_on = false;
@@ -43,6 +25,14 @@
     static uint8_t sleepmode_before_anim_speed = -1;
     static uint8_t halfmin_counter = 0;
     static uint16_t idle_timer = 0;
+#endif
+#ifdef LAYER_LIGHTING_ENABLE
+    #define MAP_TRANS 0xF000000
+    #define MAP_OFF   0x0
+    enum layer_lighting_type{
+        NORMAL,
+        MAP
+    };
 #endif
 #endif
 
@@ -110,77 +100,49 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 
+#ifdef LAYER_LIGHTING_ENABLE
+const uint8_t layer_lighting_types[] = {
+    [0] = NORMAL,
+    [1] = MAP,
+    [2] = MAP,
+    [3] = MAP
+};
+const uint32_t layer_lighting_map[][MATRIX_ROWS][MATRIX_COLS] = {
+    [0] = {
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,                         MAP_OFF,                                    MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF}
+    },
+    [1] = {
+        { 0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF0000},
+        {  MAP_OFF, MAP_TRANS,  0x00FF00, MAP_TRANS, MAP_TRANS,  0x00FF00,  0x00FF00, MAP_TRANS, MAP_TRANS,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,  0xFF00FE,   0xFF00FE},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,                         MAP_OFF,                                    MAP_OFF,   MAP_OFF,  0xFF00FE,  0xFF00FE,   0xFF00FE}
+    },
+    [2] = {
+        { 0xFF0000,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,                         MAP_OFF,                                    MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF}
+    },
+    [3] = {
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,  0xFF7700,  0xFF0000,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,  0x00FF00,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF},
+        {  MAP_OFF,   MAP_OFF,   MAP_OFF,                         MAP_OFF,                                    MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF,   MAP_OFF}
+    }
+};
+#endif
 
-// layer_state_t layer_state_set_user(layer_state_t state) {
-//     switch (get_highest_layer(state)) {
-//         case 1:
-//             rgb_matrix_set_color_all(0, 0, 0);
-//             break;
-//         default: //  for any other layers, or the default layer
-//
-//             break;
-//     }
-//   return state;
-// }
-//
 void rgb_matrix_indicators_user(void) {
     if (host_keyboard_leds() & (1 << USB_LED_CAPS_LOCK)) {
         rgb_matrix_set_color(28, 255, 0, 0);
     }
-
-    int i = 0;
-    switch (get_highest_layer(layer_state)) {
-
-        case 1:
-            for (i = 0; i < 15; i++) {
-                rgb_matrix_set_color(i, 0, 0, 0);
-            }
-            for (i = 23; i < 60; i++) {
-                rgb_matrix_set_color(i, 0, 0, 0);
-            }
-            rgb_matrix_set_color(16, 0, 255, 0);
-            rgb_matrix_set_color(19, 0, 255, 0);
-            rgb_matrix_set_color(20, 0, 255, 0);
-
-            rgb_matrix_set_color(0, 255, 0, 251);
-            for (i = 1; i < 13; ++i) {
-                rgb_matrix_set_color(i, 255, 0, 251);
-            }
-            rgb_matrix_set_color(13, 255, 0, 0);
-
-            for (i = 34; i < 38; ++i) {
-                rgb_matrix_set_color(i, 255, 0, 251);
-            }
-
-            rgb_matrix_set_color(53, 255, 0, 251);
-            rgb_matrix_set_color(54, 255, 0, 251);
-            for (i = 60; i < 64; ++i) {
-                rgb_matrix_set_color(i, 255, 0, 251);
-            }
-
-            rgb_matrix_set_color(1, 255, 255, 0);
-            break;
-
-        case 2:
-            rgb_matrix_set_color_all(0, 0, 0);
-
-            rgb_matrix_set_color(0, 255, 0, 0);
-            rgb_matrix_set_color(60, 255, 0, 251);
-
-
-            rgb_matrix_set_color(2, 255, 255, 0);
-            break;
-
-        case 3:
-            rgb_matrix_set_color_all(0, 0, 0);
-
-            rgb_matrix_set_color(3, 255, 255, 0);
-            rgb_matrix_set_color(17, 255, 80, 0);
-            rgb_matrix_set_color(18, 255, 0, 0);
-            rgb_matrix_set_color(31, 0, 255, 0);
-            break;
-
-     }
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -201,14 +163,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             idle_timer = timer_read();
             halfmin_counter = 0;
         }
-        return true;
     #endif
     #endif
+    return true;
  }
 
  void matrix_scan_user(void) {
-     #ifdef RGB_MATRIX_ENABLE
-     #ifdef SLEEPMODE_ENABLE
+    #ifdef RGB_MATRIX_ENABLE
+    #ifdef SLEEPMODE_ENABLE
         /* idle_timer needs to be set one time */
         if (idle_timer == 0) idle_timer = timer_read();
 
@@ -230,6 +192,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             sleepmode_on = true;
             halfmin_counter = 0;
         }
+    #endif
+
+    #ifdef LAYER_LIGHTING_ENABLE
+    uint8_t layer = biton32(layer_state);
+
+    if (layer_lighting_types[layer] == MAP) {
+        uint16_t led = 0;
+        uint32_t hexValue;
+        for (int y = 0; y < MATRIX_ROWS; y++) {
+            for (int x = 0; x < MATRIX_COLS; x++) {
+                hexValue = layer_lighting_map[layer][y][x];
+                if ((hexValue >> 24) > 0) { led++; continue; }
+                rgb_matrix_set_color(
+                    led,
+                    ((hexValue >> 16) & 0xFF),
+                    ((hexValue >>  8) & 0xFF),
+                    ((hexValue      ) & 0xFF)
+                );
+                led++;
+            }
+        }
+    }
     #endif
     #endif
 }
