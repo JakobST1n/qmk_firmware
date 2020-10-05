@@ -41,10 +41,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     /* This is for keys that should not be changed on a certain layer.
        Which means, either the base rgb_matrix mode will affect that led,
        or a lower layer could potentially affect it. */
-    #define MAP_TRANS 0xF000000
+    #define _TRANS__ 0xF000000
     /* This is used for other keys, set to MAP_TRANS instead of 0x0 for having
        the unchanged effect on those leds */
     #define MAP_DEF   0x0
+    /* This is just to make the keymap a bit easier to read, underscore
+       as opposed to the hyphen on the actual layout. */
+    #define ________  MAP_DEF
 #endif
 
 /*******************************************
@@ -74,3 +77,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define RGBLIGHT_EFFECT_STATIC_GRADIENT
 // #define RGBLIGHT_EFFECT_RGB_TEST
 // #define RGBLIGHT_EFFECT_ALTERNATING
+
+/*******************************************
+ * MOD TAP CONFIG
+ *******************************************/
+ #define IGNORE_MODE_TAP_INTERRUPT
+ // #undef PERMISSIVE_HOLD
+ // #undef PREVENT_STUCK_MODIFIERS

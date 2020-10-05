@@ -17,8 +17,6 @@
 
 #ifdef RGB_MATRIX_ENABLE
     #ifdef SLEEPMODE_ENABLE
-        /* A bunch of vars to keep track of the rgb states
-           before sleepmode is turned on */
         static bool sleepmode_on = false;
         static uint8_t sleepmode_before_mode = -1;
         static uint8_t sleepmode_before_brightness = -1;
@@ -33,6 +31,12 @@
         };
     #endif
 #endif
+
+/* Custom keycodes that fits my liking, currently one.
+   but lets plan for expandability ;) */
+enum JAKOBST1N_KEYCODES {
+    JKC_GRAVE
+};
 
 /* ,-----------------------------------------------------------.
  * |   |   |   |   |   |   |   |   |   |   |   |   |   |       |
@@ -61,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC,
         KC_CAPS, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_BSLS,  KC_ENT,
-        KC_LSFT, KC_NUBS, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  MT(MOD_RSFT, KC_SLSH),  KC_UP,  KC_SLSH,
+        KC_LSFT, KC_NUBS, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  MT(MOD_RSFT, KC_SLSH),  KC_UP,  JKC_GRAVE,
         KC_LCTL, KC_LGUI, KC_LALT,                  KC_SPC,                              KC_RALT, OSL(1),   KC_LEFT, KC_DOWN, KC_RGHT
     ),
     /* ,-----------------------------------------------------------.
@@ -108,32 +112,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         };
         const uint32_t layer_lighting_map[][MATRIX_ROWS][MATRIX_COLS] = {
             [0] = {
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,                         MAP_DEF,                                    MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF}
+                { ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________},
+                { ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________},
+                { ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________},
+                { ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________},
+                { ________,  ________,  ________,                        ________,                                   ________,  ________,  ________,  ________,  ________}
             },
             [1] = {
                 { 0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF0000},
-                {  MAP_DEF, MAP_TRANS,  0x00FF00, MAP_TRANS, MAP_TRANS,  0x00FF00,  0x00FF00, MAP_TRANS, MAP_TRANS,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,  0xFF00FE,   0xFF00FE},
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,                         MAP_DEF,                                    MAP_DEF,   MAP_DEF,  0xFF00FE,   0xFF00FE,   0xFF00FE}
+                { ________,  _TRANS__,  0x00FF00,  _TRANS__,  _TRANS__,  0x00FF00,  0x00FF00,  _TRANS__,  _TRANS__,  ________,  ________,  ________,  ________},
+                { ________,  ________,  ________,  ________,  ________,  ________,  0xFF00FE,  0xFF00FE,  0xFF00FE,  0xFF00FE,  ________,  ________,  ________,  ________},
+                { ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  0xFF00FE,   0xFF00FE},
+                { ________,  ________,  ________,                        ________,                                   ________,  ________,  0xFF00FE,   0xFF00FE,   0xFF00FE}
             },
             [2] = {
-                { 0xFF0000,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,                         MAP_DEF,                                    MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF}
+                { 0xFF0000,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________},
+                { ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________},
+                { ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________},
+                { ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________},
+                { ________,  ________,  ________,                        ________,                                   ________,  ________,  ________,  ________,  ________}
             },
             [3] = {
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,  0xFF7700,  0xFF0000,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,  0x00FF00,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF},
-                {  MAP_DEF,   MAP_DEF,   MAP_DEF,                         MAP_DEF,                                    MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF,   MAP_DEF}
+                { ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________},
+                { ________,  ________,  ________,  0xFF7700,  0xFF0000,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________},
+                { ________,  ________,  ________,  0x00FF00,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________},
+                { ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________,  ________},
+                { ________,  ________,  ________,                        ________,                                   ________,  ________,  ________,  ________,  ________}
             }
         };
     #endif
@@ -146,6 +150,7 @@ void rgb_matrix_indicators_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
     #ifdef RGB_MATRIX_ENABLE
         #ifdef SLEEPMODE_ENABLE
             if (record->event.pressed) {
@@ -164,6 +169,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         #endif
     #endif
+
+    switch(keycode) {
+        case JKC_GRAVE: {
+            if (record->event.pressed) {
+                if (get_mods() & MOD_MASK_SHIFT) {
+                    register_code(KC_SLSH);
+                } else {
+                    register_code(KC_GRAVE);
+                }
+            } else {
+                unregister_code(KC_SLSH);
+                unregister_code(KC_GRAVE);
+            }
+            return false;
+            break;
+        }
+    }
     return true;
  }
 
