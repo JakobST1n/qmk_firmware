@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef SLEEPMODE_ENABLE
     /* How long the backlight should stay on
        without any interaction before turning off. */
-    #define SLEEPMODE_TIMEOUT 2  // in minutes
+    #define SLEEPMODE_DEFAULT_TIMEOUT 2  // in minutes
     /* Which mode we should enter after the timeout,
        RGB_MATRIX_NONE to turn off.
        I thinks RGB_MATRIX_DIGITAL RAIN is pretty. */
@@ -41,13 +41,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     /* This is for keys that should not be changed on a certain layer.
        Which means, either the base rgb_matrix mode will affect that led,
        or a lower layer could potentially affect it. */
-    #define _TRANS__ 0xF000000
+    #define _TRANS__  0xF000000
     /* This is used for other keys, set to MAP_TRANS instead of 0x0 for having
        the unchanged effect on those leds */
     #define MAP_DEF   0x0
     /* This is just to make the keymap a bit easier to read, underscore
        as opposed to the hyphen on the actual layout. */
     #define ________  MAP_DEF
+    #define _NO_LED_  0xF0000000
 #endif
 
 /*******************************************
