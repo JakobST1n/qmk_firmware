@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef SLEEPMODE_ENABLE
     /* How long the backlight should stay on
        without any interaction before turning off. */
-    #define SLEEPMODE_DEFAULT_TIMEOUT 2  // in minutes
+    #define SLEEPMODE_DEFAULT_TIMEOUT 10  // in minutes
     /* Which mode we should enter after the timeout,
        RGB_MATRIX_NONE to turn off.
        I thinks RGB_MATRIX_DIGITAL RAIN is pretty. */
@@ -82,6 +82,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /*******************************************
  * MOD TAP CONFIG
  *******************************************/
- #define IGNORE_MODE_TAP_INTERRUPT
- // #undef PERMISSIVE_HOLD
- // #undef PREVENT_STUCK_MODIFIERS
+ #define IGNORE_MOD_TAP_INTERRUPT
+ #define TAPPING_TERM 200
+ //#define PERMISSIVE_HOLD
+ //#undef PREVENT_STUCK_MODIFIERS
